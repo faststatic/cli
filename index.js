@@ -49,7 +49,9 @@ function clearPkg() {
       const folderList = fs.readdirSync(folderPath);
       folderList.forEach((folder) => {
         if (!stableVersion.test(folder)) {
-          fs.rmdirSync(path.join(folderPath, folder), { recursive: true });
+          const removeFolderPath = path.join(folderPath, folder);
+          log(`> Removing ${removeFolderPath}`);
+          fs.rmdirSync(removeFolderPath, { recursive: true });
         }
       });
     }
