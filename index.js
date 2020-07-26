@@ -39,6 +39,21 @@ function installPkg() {
   shell.cd(currPath);
 }
 
+function clearPkg() {
+  const stableVersion = new RegExp(/^v\d+.\d+.\d+$/);
+  const currPath = shell.pwd().toString();
+  const pkgFolderList = fs.readdirSync(currPath);
+  pkgFolderList.forEach((pkgFolder) => {
+    const folderPath = path.join(currPath, pkgFolder, 'node_modules');
+    const folderList = fs.readdirSync(folderPath);
+    folderList.forEach((folder) => {
+      if (!stableVersion.test(folder)) {
+        fs.rmdirSync(path.join(folderPath, folder), { recursive: true });
+      }
+    })
+  })
+}
+
 switch (operation) {
   case 'init': {
     initFolder();
@@ -77,6 +92,9 @@ switch (operation) {
     }());
     break;
   }
+  case 'clean':
+    clearPkg(); 
+    break;
   default:
     log('Error on arguments');
     shell.exit(-1);
