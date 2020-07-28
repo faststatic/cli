@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-const shell = require("shelljs");
-const fs = require("fs");
-const path = require("path");
-const npm = require("./npm");
-const cdnjs = require("./cdnjs");
+const shell = require('shelljs');
+const fs = require('fs');
+const path = require('path');
+const npm = require('./npm');
+const cdnjs = require('./cdnjs');
 
 const log = console.log;
 const options = process.argv.slice(2);
@@ -23,7 +23,7 @@ function initFolder() {
 
 function installPkg() {
   if (options.length !== 3) {
-    log("Error on arguments");
+    log('Error on arguments');
     shell.exit(1);
   }
   const pkgName = options[1];
@@ -44,7 +44,7 @@ function clearPkg() {
   const currPath = shell.pwd().toString();
   const pkgFolderList = fs.readdirSync(currPath);
   pkgFolderList.forEach((pkgFolder) => {
-    const folderPath = path.join(currPath, pkgFolder, "node_modules");
+    const folderPath = path.join(currPath, pkgFolder, 'node_modules');
     if (fs.existsSync(folderPath)) {
       const folderList = fs.readdirSync(folderPath);
       folderList.forEach((folder) => {
@@ -59,24 +59,24 @@ function clearPkg() {
 }
 
 switch (operation) {
-  case "init": {
+  case 'init': {
     initFolder();
     break;
   }
-  case "install": {
+  case 'install': {
     installPkg();
     break;
   }
-  case "past": {
+  case 'past': {
     npm.pastVersion(options[1], parseInt(options[2], 10));
     break;
   }
-  case "i": {
+  case 'i': {
     initFolder();
     installPkg();
     break;
   }
-  case "list": {
+  case 'list': {
     // eslint-disable-next-line func-names
     (async function () {
       const pkgList = await cdnjs.getPkgList();
@@ -84,7 +84,7 @@ switch (operation) {
     })();
     break;
   }
-  case "sync": {
+  case 'sync': {
     // eslint-disable-next-line func-names
     (async function () {
       const pkgList = await cdnjs.getPkgList();
@@ -96,11 +96,11 @@ switch (operation) {
     })();
     break;
   }
-  case "clean":
+  case 'clean':
     clearPkg();
     break;
   default:
-    log("Error on arguments");
+    log('Error on arguments');
     shell.exit(-1);
     break;
 }
