@@ -81,7 +81,7 @@ switch (operation) {
     (async function () {
       const pkgList = await cdnjs.getPkgList();
       log(pkgList);
-    })();
+    }());
     break;
   }
   case 'sync': {
@@ -93,7 +93,7 @@ switch (operation) {
       pkgList.forEach((pkg) => {
         shell.exec(`faststatic i ${pkg} ${lastCount}`);
       });
-    })();
+    }());
     break;
   }
   case 'clean':
