@@ -4,7 +4,7 @@ const shell = require('shelljs');
 const fs = require('fs');
 const path = require('path');
 const npm = require('./npm');
-const cdnjs = require('./cdnjs');
+const faststatic = require('./faststatic');
 
 const log = console.log;
 const options = process.argv.slice(2);
@@ -77,23 +77,17 @@ switch (operation) {
     break;
   }
   case 'list': {
-    // eslint-disable-next-line func-names
-    (async function () {
-      const pkgList = await cdnjs.getPkgList();
-      log(pkgList);
-    }());
+    const pkgList = faststatic.pkgList;
+    log(pkgList, pkgList.length);
     break;
   }
   case 'sync': {
-    // eslint-disable-next-line func-names
-    (async function () {
-      const pkgList = await cdnjs.getPkgList();
-      const lastCount = parseInt(options[1], 10);
-      log(pkgList);
-      pkgList.forEach((pkg) => {
-        shell.exec(`faststatic i ${pkg} ${lastCount}`);
-      });
-    }());
+    const pkgList = faststatic.pkgList;
+    const lastCount = parseInt(options[1], 10);
+    log(pkgList, pkgList.length);
+    pkgList.forEach((pkg) => {
+      shell.exec(`faststatic i ${pkg} ${lastCount}`);
+    });
     break;
   }
   case 'clean':

@@ -254,4 +254,5 @@ const popularJS = [
 module.exports = {
   popularCSS,
   popularJS,
+  pkgList: [...popularCSS, ...popularJS]
 };
